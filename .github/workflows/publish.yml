@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/setup@v2
         with:
           version: 11.21.0
+          install: false
       - uses: actions/setup-node@v6
         with:
           node-version: 26.6.0
-          cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm check
@@ -34,16 +34,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/setup@v2
         with:
           version: 11.21.0
+          install: false
       - uses: actions/setup-node@v6
         with:
           node-version: 26.6.0
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter monoswan build
+      - run: pnpm turbo run build --filter=monoswan...
       - run: pnpm --filter monoswan pack --pack-destination "$RUNNER_TEMP/monoswan"
       - name: Stage package on npm
         run: npm stage publish "$RUNNER_TEMP"/monoswan/monoswan-*.tgz --access public
