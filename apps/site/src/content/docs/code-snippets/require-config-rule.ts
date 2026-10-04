@@ -1,5 +1,5 @@
 import { defineConfig, requireMonoswanConfig } from "monoswan";
 
 export default defineConfig({
-	rules: [requireMonoswanConfig({ requireVariant: true })],
+  rules: [requireMonoswanConfig({ requireVariant: true })],
 });

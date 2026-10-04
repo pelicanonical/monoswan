@@ -1,28 +1,28 @@
 {
-	"name": "@monoswan/tsdown-lib-plugin",
-	"version": "0.0.0",
-	"private": true,
-	"type": "module",
-	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"default": "./dist/index.mjs"
-		}
-	},
-	"files": [
-		"dist"
-	],
-	"scripts": {
-		"build": "NODE_ENV=production tsdown",
-		"check": "tsc --noEmit",
-		"dev:build": "NODE_ENV=development tsdown"
-	},
-	"dependencies": {
-		"tsdown": "catalog:"
-	},
-	"devDependencies": {
-		"@monoswan/typescript-config": "workspace:*",
-		"@types/node": "catalog:",
-		"typescript": "catalog:"
-	}
+  "name": "@monoswan/tsdown-lib-plugin",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "NODE_ENV=production tsdown",
+    "check": "tsc --noEmit",
+    "dev:build": "NODE_ENV=development tsdown"
+  },
+  "dependencies": {
+    "tsdown": "catalog:"
+  },
+  "devDependencies": {
+    "@monoswan/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  }
 }

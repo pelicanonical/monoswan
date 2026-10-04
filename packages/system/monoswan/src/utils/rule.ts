@@ -9,59 +9,59 @@ import { isPackageIgnored } from "./repo.ts";
 export type CreateLintRuleOptions = Pick<LintRule, "name" | "check">;
 
 export interface MonoswanRuleOptions {
-	ignore?: IgnoredConfig;
+  ignore?: IgnoredConfig;
 }
 
 export const createIgnoreMatchers = (ignore: IgnoredConfig = {}) =>
-	allResults([createGlobMatcher(ignore.paths ?? []), createGlobMatcher(ignore.packages ?? [])]);
+  allResults([createGlobMatcher(ignore.paths ?? []), createGlobMatcher(ignore.packages ?? [])]);
 
 export const getRulesByPackage = (
-	packages: PackageManifestContext[],
-	rules: LintRule[],
-	repoPath: string,
+  packages: PackageManifestContext[],
+  rules: LintRule[],
+  repoPath: string,
 ) =>
-	fromResult(
-		allResults(
-			rules.map((rule) =>
-				createIgnoreMatchers(rule.ignore).map(([isIgnoredPath, isIgnoredPackage]) => ({
-					rule,
-					isIgnoredPath,
-					isIgnoredPackage,
-				})),
-			),
-		),
-	).map(
-		(rulesWithMatchers) =>
-			new Map(
-				packages.map((pkg) => [
-					pkg,
-					rulesWithMatchers
-						.filter(
-							({ isIgnoredPath, isIgnoredPackage }) =>
-								!isPackageIgnored(pkg, repoPath, isIgnoredPath, isIgnoredPackage),
-						)
-						.map(({ rule }) => rule),
-				]),
-			),
-	);
+  fromResult(
+    allResults(
+      rules.map((rule) =>
+        createIgnoreMatchers(rule.ignore).map(([isIgnoredPath, isIgnoredPackage]) => ({
+          rule,
+          isIgnoredPath,
+          isIgnoredPackage,
+        })),
+      ),
+    ),
+  ).map(
+    (rulesWithMatchers) =>
+      new Map(
+        packages.map((pkg) => [
+          pkg,
+          rulesWithMatchers
+            .filter(
+              ({ isIgnoredPath, isIgnoredPackage }) =>
+                !isPackageIgnored(pkg, repoPath, isIgnoredPath, isIgnoredPackage),
+            )
+            .map(({ rule }) => rule),
+        ]),
+      ),
+  );
 
 export function createRule(
-	createRuleFn: () => CreateLintRuleOptions,
+  createRuleFn: () => CreateLintRuleOptions,
 ): (options?: undefined, monoswanOptions?: MonoswanRuleOptions) => LintRule;
 
 export function createRule<RuleOptions>(
-	createRuleFn: (options?: RuleOptions) => CreateLintRuleOptions,
+  createRuleFn: (options?: RuleOptions) => CreateLintRuleOptions,
 ): (options?: RuleOptions, monoswanOptions?: MonoswanRuleOptions) => LintRule;
 
 export function createRule<RuleOptions>(
-	createRuleFn: (options: RuleOptions) => CreateLintRuleOptions,
+  createRuleFn: (options: RuleOptions) => CreateLintRuleOptions,
 ): (options: RuleOptions, monoswanOptions?: MonoswanRuleOptions) => LintRule;
 
 export function createRule<RuleOptions>(
-	createRuleFn: (options: RuleOptions) => CreateLintRuleOptions,
+  createRuleFn: (options: RuleOptions) => CreateLintRuleOptions,
 ) {
-	return (options: RuleOptions, monoswanOptions?: MonoswanRuleOptions): LintRule => ({
-		...createRuleFn(options),
-		ignore: monoswanOptions?.ignore,
-	});
+  return (options: RuleOptions, monoswanOptions?: MonoswanRuleOptions): LintRule => ({
+    ...createRuleFn(options),
+    ignore: monoswanOptions?.ignore,
+  });
 }

@@ -9,15 +9,15 @@ A variant describes expected package files. The same file fields may appear unde
 
 ```ts
 interface VariantConfig extends VariantContent {
-	initialization?: VariantContent;
+  initialization?: VariantContent;
 }
 
 interface VariantContent {
-	packageJson?: PackageManifest;
-	tsConfig?: TsConfigJson;
-	tsConfigs?: Record<string, TsConfigJson>;
-	additionalJsonFiles?: Record<string, JsonObject>;
-	additionalTextFiles?: Record<string, string>;
+  packageJson?: PackageManifest;
+  tsConfig?: TsConfigJson;
+  tsConfigs?: Record<string, TsConfigJson>;
+  additionalJsonFiles?: Record<string, JsonObject>;
+  additionalTextFiles?: Record<string, string>;
 }
 ```
 
@@ -60,10 +60,10 @@ Select variants in `package.json`:
 
 ```json
 {
-	"name": "@myrepo/example",
-	"monoswan": {
-		"variants": ["base", "my-library"]
-	}
+  "name": "@myrepo/example",
+  "monoswan": {
+    "variants": ["base", "my-library"]
+  }
 }
 ```
 
@@ -71,8 +71,8 @@ Or use `monoswan.json` beside the manifest:
 
 ```jsonc
 {
-	// Later variants take precedence during merging.
-	"variants": ["base", "my-library"],
+  // Later variants take precedence during merging.
+  "variants": ["base", "my-library"],
 }
 ```
 

@@ -2,6 +2,6 @@
 @import "@phosphor-icons/web/regular/style.css";
 
 @theme {
-	--font-forum: var(--font-forum), "Forum", sans-serif;
-	--font-departure-mono: var(--font-departure-mono), monospace;
+  --font-forum: var(--font-forum), "Forum", sans-serif;
+  --font-departure-mono: var(--font-departure-mono), monospace;
 }

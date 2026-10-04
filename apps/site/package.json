@@ -1,22 +1,22 @@
 {
-	"name": "@monoswan/site",
-	"version": "0.0.1",
-	"private": true,
-	"type": "module",
-	"scripts": {
-		"astro": "astro",
-		"build": "astro build",
-		"check:links": "node scripts/check-links.mjs",
-		"dev": "astro dev",
-		"dev:vite-app": "astro dev",
-		"preview": "astro preview"
-	},
-	"devDependencies": {
-		"@astrojs/starlight": "^0.42.5",
-		"@monoswan/styles-config": "workspace:*",
-		"@phosphor-icons/web": "^2.1.2",
-		"@tailwindcss/vite": "catalog:",
-		"astro": "^7.3.5",
-		"sharp": "^0.35.5"
-	}
+  "name": "@monoswan/site",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "astro": "astro",
+    "build": "astro build",
+    "check:links": "node scripts/check-links.mjs",
+    "dev": "astro dev",
+    "dev:vite-app": "astro dev",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "@astrojs/starlight": "^0.42.5",
+    "@monoswan/styles-config": "workspace:*",
+    "@phosphor-icons/web": "^2.1.2",
+    "@tailwindcss/vite": "catalog:",
+    "astro": "^7.3.5",
+    "sharp": "^0.35.5"
+  }
 }

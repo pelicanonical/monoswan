@@ -9,21 +9,21 @@ selected package manager. pnpm is the default.
 
 ```ts
 const project = await createTestMonorepo({
-	workspace: {
-		packageManager: "npm",
-		patterns: ["packages/*", "tests/*", "!packages/legacy"],
-	},
-	packages: [
-		{ name: "library", directory: "packages/library" },
-		{ name: "integration-app", directory: "tests/integration-app" },
-	],
+  workspace: {
+    packageManager: "npm",
+    patterns: ["packages/*", "tests/*", "!packages/legacy"],
+  },
+  packages: [
+    { name: "library", directory: "packages/library" },
+    { name: "integration-app", directory: "tests/integration-app" },
+  ],
 });
 
 try {
-	await project.addPackage({ name: "new-package" });
-	await project.writeFile("monoswan.config.ts", "export default {};\n");
+  await project.addPackage({ name: "new-package" });
+  await project.writeFile("monoswan.config.ts", "export default {};\n");
 } finally {
-	await project.cleanup();
+  await project.cleanup();
 }
 ```
 

@@ -13,10 +13,10 @@ functions. The supported filenames are `monoswan.config.ts` and `monoswan.config
 import { defineConfig } from "monoswan";
 
 export default defineConfig({
-	variants: {},
-	rules: [],
-	ignore: {},
-	merge: {},
+  variants: {},
+  rules: [],
+  ignore: {},
+  merge: {},
 });
 ```
 
@@ -37,8 +37,8 @@ receive:
 
 ```ts
 interface PackageContext {
-	packageName: string | undefined;
-	packagePath: string;
+  packageName: string | undefined;
+  packagePath: string;
 }
 ```
 
@@ -65,8 +65,8 @@ See the [linting overview](/docs/linting/) and [custom rules](/docs/linting/cust
 
 ```ts
 interface IgnoredConfig {
-	packages?: string[];
-	paths?: string[];
+  packages?: string[];
+  paths?: string[];
 }
 ```
 
@@ -85,10 +85,10 @@ and package-name matching, but skip only that rule.
 
 ```ts
 interface MergeConfig {
-	mergePackageManifests?: MergeFn<PackageManifest>;
-	mergeTsConfigs?: MergeFn<TsConfigJson>;
-	mergeAdditionalJsonFiles?: MergeFn<JsonObject>;
-	mergeAdditionalTextFiles?: MergeFn<string>;
+  mergePackageManifests?: MergeFn<PackageManifest>;
+  mergeTsConfigs?: MergeFn<TsConfigJson>;
+  mergeAdditionalJsonFiles?: MergeFn<JsonObject>;
+  mergeAdditionalTextFiles?: MergeFn<string>;
 }
 ```
 
@@ -96,12 +96,12 @@ Every callback has this shape:
 
 ```ts
 type MergeFn<Schema> = (
-	values: [Schema, ...Schema[]],
-	context: {
-		packageName: string | undefined;
-		packagePath: string;
-		filePath: string;
-	},
+  values: [Schema, ...Schema[]],
+  context: {
+    packageName: string | undefined;
+    packagePath: string;
+    filePath: string;
+  },
 ) => Schema;
 ```
 

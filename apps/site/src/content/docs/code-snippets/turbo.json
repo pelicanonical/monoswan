@@ -1,9 +1,9 @@
 {
-	"$schema": "https://turborepo.com/schema.json",
-	"tasks": {
-		"//#monoswan": {},
-		"//#monoswan:fix": {
-			"cache": false
-		}
-	}
+  "$schema": "https://turborepo.com/schema.json",
+  "tasks": {
+    "//#monoswan": {},
+    "//#monoswan:fix": {
+      "cache": false
+    }
+  }
 }

@@ -14,7 +14,7 @@ export type PackageManifest = ProjectManifest;
  * @category JSON
  */
 export type JsonObject = { [Key in string]: JsonValue } & {
-	[Key in string]?: JsonValue | undefined;
+  [Key in string]?: JsonValue | undefined;
 };
 
 /**

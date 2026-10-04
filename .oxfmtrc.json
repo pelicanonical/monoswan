@@ -1,11 +1,11 @@
 {
-	"$schema": "./node_modules/oxfmt/configuration_schema.json",
-	"useTabs": true,
-	"singleQuote": false,
-	"semi": true,
-	"ignorePatterns": ["**/*.gen.ts"],
-	"sortPackageJson": false,
-	"sortTailwindcss": {
-		"functions": ["clsx", "cn"]
-	}
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "useTabs": false,
+  "singleQuote": false,
+  "semi": true,
+  "ignorePatterns": ["**/*.gen.ts"],
+  "sortPackageJson": false,
+  "sortTailwindcss": {
+    "functions": ["clsx", "cn"]
+  }
 }
