@@ -50,7 +50,21 @@ export default defineConfig({
         Footer: "./src/components/docs-footer.astro",
       },
       head: [
+        {
+          tag: "meta",
+          attrs: {
+            name: "keywords",
+            content: "monorepo, package management, package.json, TypeScript, monoswan",
+          },
+        },
+        { tag: "meta", attrs: { name: "author", content: "monoswan" } },
+        { tag: "meta", attrs: { name: "robots", content: "index, follow" } },
+        {
+          tag: "meta",
+          attrs: { property: "og:image", content: "https://monoswan.com/favicon.png" },
+        },
         { tag: "meta", attrs: { property: "og:site_name", content: "monoswan" } },
+        { tag: "meta", attrs: { property: "og:locale", content: "en_US" } },
         { tag: "meta", attrs: { property: "og:type", content: "website" } },
         { tag: "meta", attrs: { name: "twitter:card", content: "summary" } },
       ],
