@@ -38,13 +38,13 @@ Create `monoswan.config.ts` at the workspace root:
 import { defineConfig, enforceVariants, sortPackageJson } from "monoswan";
 
 export default defineConfig({
-	variants: {
-		"my-library": {
-			packageJson: { type: "module" },
-			tsConfig: { compilerOptions: { strict: true } },
-		},
-	},
-	rules: [enforceVariants(), sortPackageJson()],
+  variants: {
+    "my-library": {
+      packageJson: { type: "module" },
+      tsConfig: { compilerOptions: { strict: true } },
+    },
+  },
+  rules: [enforceVariants(), sortPackageJson()],
 });
 ```
 
@@ -52,10 +52,10 @@ Select a variant in a workspace package's `package.json`:
 
 ```json
 {
-	"name": "@myrepo/example",
-	"monoswan": {
-		"variants": ["my-library"]
-	}
+  "name": "@myrepo/example",
+  "monoswan": {
+    "variants": ["my-library"]
+  }
 }
 ```
 

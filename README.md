@@ -76,13 +76,13 @@ Then describe a shared package shape in `monoswan.config.ts`:
 import { defineConfig, enforceVariants, sortPackageJson } from "monoswan";
 
 export default defineConfig({
-	variants: {
-		"my-library": {
-			packageJson: { type: "module" },
-			tsConfig: { compilerOptions: { strict: true } },
-		},
-	},
-	rules: [enforceVariants(), sortPackageJson()],
+  variants: {
+    "my-library": {
+      packageJson: { type: "module" },
+      tsConfig: { compilerOptions: { strict: true } },
+    },
+  },
+  rules: [enforceVariants(), sortPackageJson()],
 });
 ```
 
@@ -90,10 +90,10 @@ Assign the variant to a workspace package:
 
 ```json
 {
-	"name": "@myrepo/example",
-	"monoswan": {
-		"variants": ["my-library"]
-	}
+  "name": "@myrepo/example",
+  "monoswan": {
+    "variants": ["my-library"]
+  }
 }
 ```
 

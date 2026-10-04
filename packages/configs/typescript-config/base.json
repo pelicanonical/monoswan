@@ -1,35 +1,35 @@
 {
-	"$schema": "https://json.schemastore.org/tsconfig",
-	"compilerOptions": {
-		"lib": ["es2023"],
-		"target": "es2023",
-		"skipLibCheck": true,
-		"isolatedModules": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "lib": ["es2023"],
+    "target": "es2023",
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
 
-		"resolveJsonModule": true,
+    "resolveJsonModule": true,
 
-		"noUncheckedSideEffectImports": true,
+    "noUncheckedSideEffectImports": true,
 
-		"moduleDetection": "force",
+    "moduleDetection": "force",
 
-		"strict": true,
+    "strict": true,
 
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"erasableSyntaxOnly": true,
-		"noFallthroughCasesInSwitch": true,
-		"preserveWatchOutput": true,
-		"noUncheckedIndexedAccess": true,
-		"strictNullChecks": true,
-		"noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "preserveWatchOutput": true,
+    "noUncheckedIndexedAccess": true,
+    "strictNullChecks": true,
+    "noImplicitOverride": true,
 
-		"verbatimModuleSyntax": true,
-		"useDefineForClassFields": true,
+    "verbatimModuleSyntax": true,
+    "useDefineForClassFields": true,
 
-		"outDir": "${configDir}/dist",
-		"rootDir": "${configDir}/src"
-	},
-	"include": ["${configDir}/src"]
+    "outDir": "${configDir}/dist",
+    "rootDir": "${configDir}/src"
+  },
+  "include": ["${configDir}/src"]
 }

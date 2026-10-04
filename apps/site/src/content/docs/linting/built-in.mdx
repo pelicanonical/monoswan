@@ -36,12 +36,12 @@ autofix rewrites `package.json` with tab indentation and a trailing newline. Imp
 
 ```ts
 sortPackageJson({
-	order: "fixed",
-	keys: ["name", "version", "private"],
-	fallbackCompare: (left, right) => left.localeCompare(right),
-	overrides: {
-		scripts: { order: "alphabetical" },
-	},
+  order: "fixed",
+  keys: ["name", "version", "private"],
+  fallbackCompare: (left, right) => left.localeCompare(right),
+  overrides: {
+    scripts: { order: "alphabetical" },
+  },
 });
 ```
 
