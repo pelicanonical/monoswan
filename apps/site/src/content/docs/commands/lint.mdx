@@ -1,0 +1,26 @@
+---
+title: lint
+description: Check workspace packages against resolved variants.
+slug: docs/commands/lint
+---
+
+import { Code } from "@astrojs/starlight/components";
+
+<Code code={`monoswan lint [path]`} lang="sh" />
+
+`path` defaults to the current directory. monoswan loads the nearest root configuration and
+discovers packages from the workspace declaration beside it. The requested path then limits the
+packages checked: packages at or below it are selected first. When there are no workspace packages
+below the requested path, monoswan selects the deepest workspace package containing it. Global
+and rule-level ignores are then applied before the remaining rules run. monoswan resolves each
+selected package's variants and validates its configured files.
+
+Issues are grouped by package. The command exits non-zero when it finds issues or cannot complete.
+
+<Code code={`pnpm exec monoswan lint .`} lang="sh" />
+
+- `--fix` runs available autofixes before reporting the remaining issues.
+- `--silent` suppresses diagnostics without changing the exit code.
+
+Variant content is validated only when a configured rule performs that validation. See the
+[linting overview](/docs/linting/) for built-in rules, custom rules, and ignore behavior.

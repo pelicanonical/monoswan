@@ -1,0 +1,89 @@
+---
+title: Quick start
+description: Install monoswan and check a workspace.
+slug: docs/quick-start
+---
+
+import { Code } from "@astrojs/starlight/components";
+import AgentPrompt from "../../components/agent-prompt.astro";
+import monoswanConfig from "./code-snippets/quick-start-config.ts?raw";
+import packageJson from "./code-snippets/quick-start-package.json?raw";
+import monoswanJson from "./code-snippets/quick-start-monoswan.json?raw";
+import packageScripts from "./code-snippets/lint-package-scripts.json.txt?raw";
+
+export const agentPrompt = `monoswan is a monorepo management tool to help keep your package.json, tsconfig.json, and other standard files consistent across packages in a monorepo. Set up monoswan in this monorepo, you can view the full documentation at monoswan.com/llms.txt. Inspect the workspace first so you can preserve its package manager, structure, and existing conventions. Install monoswan as a development dependency at the workspace root, run its init command, then review the workspace packages and define practical variants in monoswan.config.ts for their shared package.json, TypeScript, JSON, and text-file configuration. Assign the appropriate variant or variants to each package, run the monoswan linter, fix any issues it reports without changing unrelated behavior, and summarize the configuration and files you changed.`;
+
+## Set up with an AI agent
+
+<AgentPrompt prompt={agentPrompt} />
+
+## Install
+
+Install monoswan at the workspace root.
+
+<Code
+	code={`# pnpm\npnpm add -D -w monoswan
+
+# npm\nnpm install -D monoswan
+
+# yarn\nyarn add -D -W monoswan
+
+# bun\nbun add -D monoswan`}
+
+lang="sh"
+/>
+
+The workspace root must contain `pnpm-workspace.yaml` or a `workspaces` declaration in
+`package.json`.
+
+Workspace discovery supports pnpm workspace files, npm and Bun workspace arrays, and both Yarn
+workspace forms, including modern Yarn Plug'n'Play installations. monoswan reads the declaration
+directly and does not invoke the package manager during discovery.
+
+## Add a configuration
+
+Create `monoswan.config.ts` in the repository root.
+
+<Code code={monoswanConfig} lang="ts" title="monoswan.config.ts" />
+
+The filename must be `monoswan.config.ts` or `monoswan.config.mts`.
+
+## Assign a variant
+
+Add a `monoswan` field to a workspace package's `package.json` or define a `monoswan.json` in the root of the package.
+
+`package.json`
+
+<Code code={packageJson} lang="json" title="package.json" />
+
+`monoswan.json`
+
+<Code code={monoswanJson} lang="json" title="monoswan.json" />
+
+You may compose variants: `"variants": ["base", "my-library"]`, where each variant is merged.
+
+## Add workspace scripts
+
+Add scripts to the workspace root `package.json` so linting and autofixing use the locally
+installed monoswan version:
+
+<Code code={packageScripts} lang="json" title="package.json" />
+
+## Lint the workspace
+
+Run the script with your package manager:
+
+<Code
+	code={`# pnpm\npnpm monoswan
+
+# npm\nnpm run monoswan
+
+# yarn\nyarn monoswan
+
+# bun\nbun run monoswan`}
+
+lang="sh"
+/>
+
+Run the corresponding `monoswan:fix` script to apply available fixes before reporting remaining
+issues.

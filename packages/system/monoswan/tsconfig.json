@@ -1,0 +1,3 @@
+{
+	"extends": ["@monoswan/typescript-config/library.json", "@monoswan/typescript-config/node.json"]
+}

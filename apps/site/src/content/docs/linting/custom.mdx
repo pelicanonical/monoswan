@@ -1,0 +1,21 @@
+---
+title: Custom rules
+description: Define repository-specific package checks.
+slug: docs/linting/custom
+---
+
+import { Code } from "@astrojs/starlight/components";
+import customRule from "../code-snippets/custom-rule.ts?raw";
+import customRuleOptions from "../code-snippets/custom-rule-options.ts?raw";
+
+You can define custom rules that can be enforced via the `createRule` function.
+
+<Code code={customRule} lang="ts" title="monoswan.config.ts" />
+
+A rule receives `packageName`, `packagePath`, `packageJson`, and the resolved `variant`. Any other files may be loaded directly via `node:fs` APIs. Run `monoswan lint --fix` to apply returned autofixes.
+
+## Custom options
+
+You can define custom options for consumers as part of the rule definition.
+
+<Code code={customRuleOptions} lang="ts" title="monoswan.config.ts" />

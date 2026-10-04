@@ -1,0 +1,22 @@
+{
+	"files.readonlyInclude": {
+		"**/*.gen.ts": true
+	},
+	"files.watcherExclude": {
+		"**/*.gen.ts": true
+	},
+	"search.exclude": {
+		"**/*.gen.ts": true
+	},
+	"editor.defaultFormatter": "oxc.oxc-vscode",
+	"editor.formatOnSave": true,
+	"editor.formatOnSaveMode": "file",
+	"json.schemaDownload.trustedDomains": {
+		"https://json.schemastore.org/": true,
+		"https://turborepo.com": true,
+		"https://ui.shadcn.com": true
+	},
+	"[astro]": {
+		"editor.defaultFormatter": "astro-build.astro-vscode"
+	}
+}

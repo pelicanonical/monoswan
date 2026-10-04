@@ -1,0 +1,29 @@
+{
+	"name": "@monoswan/testing-utils",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.mjs"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "NODE_ENV=production tsdown",
+		"check": "tsc --noEmit",
+		"dev:build": "NODE_ENV=development tsdown",
+		"test": "vitest run"
+	},
+	"devDependencies": {
+		"@monoswan/tsdown-lib-plugin": "workspace:*",
+		"@monoswan/typescript-config": "workspace:*",
+		"@types/node": "catalog:",
+		"tsdown": "catalog:",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	}
+}

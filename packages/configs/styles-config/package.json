@@ -1,0 +1,19 @@
+{
+	"name": "@monoswan/styles-config",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./shared-styles.css",
+		"./postcss": "./postcss.config.js",
+		"./shared-styles.css": "./shared-styles.css"
+	},
+	"dependencies": {
+		"tailwindcss": "catalog:",
+		"tw-animate-css": "catalog:"
+	},
+	"devDependencies": {
+		"@tailwindcss/postcss": "catalog:",
+		"postcss": "catalog:"
+	}
+}

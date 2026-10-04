@@ -1,0 +1,24 @@
+---
+title: print-config
+description: Inspect the resolved variant for a package.
+slug: docs/commands/print-config
+---
+
+import { Code } from "@astrojs/starlight/components";
+
+<Code code={`monoswan print-config [path]`} lang="sh" />
+
+`path` defaults to the current directory. monoswan finds the deepest workspace package containing that path, resolves its selected variants, and prints the result as formatted JSON.
+
+<Code code={`pnpm exec monoswan print-config packages/example`} lang="sh" />
+
+The output includes the regular merged variant and its fully merged `initialization` content. Use it to confirm variant order, dynamic values, and custom merge behavior.
+
+Package discovery begins in the directory containing the root monoswan configuration. The
+requested path must be inside a discovered package; when packages are nested, the deepest
+containing package is selected. Missing packages, invalid package configuration, unknown
+variants, and merge failures are written to stderr and exit non-zero.
+
+On success, stdout contains formatted JSON followed by a newline, making it suitable for
+inspection or piping to another command. The output reflects the resolved configuration and does
+not include the package's unrelated on-disk values.

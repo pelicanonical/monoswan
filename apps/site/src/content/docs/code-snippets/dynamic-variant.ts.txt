@@ -1,0 +1,7 @@
+variants: {
+	named: ({ packageName }) => ({
+		packageJson: {
+			description: packageName != null ? `${packageName} package` : "My package description",
+		},
+	}),
+}

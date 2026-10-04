@@ -1,0 +1,4 @@
+"scripts": {
+	"monoswan": "monoswan lint .",
+	"monoswan:fix": "monoswan lint . --fix"
+}

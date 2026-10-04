@@ -1,0 +1,94 @@
+---
+title: Configuration
+description: Define variants and merge behavior.
+slug: docs/configuration
+---
+
+import { Code } from "@astrojs/starlight/components";
+import baseConfig from "../code-snippets/configuration-base.ts?raw";
+import ignoreConfig from "../code-snippets/configuration-ignore.ts.txt?raw";
+import packageJson from "../code-snippets/configuration-package.json?raw";
+import monoswanJson from "../code-snippets/configuration-monoswan.json?raw";
+
+monoswan loads the nearest `monoswan.config.ts` or `monoswan.config.mts` by searching from the requested path toward the filesystem root. The file must default-export a value created with `defineConfig`.
+
+<Code code={baseConfig} lang="ts" title="monoswan.config.ts" />
+
+The configuration is executable, trusted TypeScript loaded by monoswan. `defineConfig` is the
+supported, type-safe way to create it. See the [root configuration reference](/docs/configuration/root-reference/)
+for every field, callback context, and loading behavior.
+
+## Options
+
+### `variants`
+
+A record of named package expectations. A variant can be an object or a function that receives `{ packageName, packagePath }`.
+
+See [Variants](/docs/configuration/variants/).
+
+### `merge`
+
+Optional functions for combining values when a package selects multiple variants:
+
+- `mergePackageManifests`
+- `mergeTsConfigs`
+- `mergeAdditionalJsonFiles`
+- `mergeAdditionalTextFiles`
+
+Each function receives the selected schemas in variant order and a file context. By default, JSON objects are deeply merged and later text values win.
+
+### `rules`
+
+Rules applied by `monoswan lint`. Use a built-in rule or create one with `createRule`. See [Linting](/docs/linting/).
+
+### `ignore`
+
+Glob patterns that exclude packages from every rule:
+
+<Code code={ignoreConfig} lang="ts" title="monoswan.config.ts" />
+
+Paths are matched relative to the workspace root containing the nearest monoswan configuration.
+A package is ignored when either its path or name matches. These patterns do not change workspace
+membership; they only prevent matching packages from running lint rules.
+
+## Package-level configuration
+
+Select variants in `package.json`:
+
+<Code code={packageJson} lang="json" title="package.json" />
+
+Or create `monoswan.json` beside `package.json`:
+
+<Code code={monoswanJson} lang="json" title="monoswan.json" />
+
+When `monoswan.json` exists, it takes precedence over the field in `package.json`.
+
+The `variants` value must be an array of strings. An omitted value or empty array selects no
+variants. If `monoswan.json` exists but is invalid, linting fails instead of falling back to the
+manifest field. Both JSON and JSONC syntax are supported, including comments and trailing commas.
+
+See the [variant and file reference](/docs/configuration/variant-files/) for all supported fields
+and validation behavior.
+
+## Merge behavior
+
+Packages may select multiple variants. Values are processed in the order listed by the package,
+and later values take precedence when they conflict.
+
+- `packageJson`, `tsConfig`, each `tsConfigs` entry, and each `additionalJsonFiles` entry are
+  deeply merged as JSON objects.
+- Arrays use the underlying deep-merge behavior: entries at the same index are merged or
+  replaced, while remaining entries are retained. Define a custom merge function when an array
+  should be replaced, concatenated, or deduplicated as a unit.
+- For each path in `additionalTextFiles`, the last defined string wins.
+- A multi-file merge callback runs once per file path and receives only the values defined for
+  that path.
+- Every custom merge callback receives `{ packageName, packagePath, filePath }`. `filePath` is
+  the absolute destination path for the value being merged.
+- The configured merge callbacks are used for both regular variant content and computed
+  `initialization` content. During initialization, each variant's regular content is followed by
+  that variant's `initialization` content before the next variant is processed.
+
+The available callbacks are `mergePackageManifests`, `mergeTsConfigs`,
+`mergeAdditionalJsonFiles`, and `mergeAdditionalTextFiles`. A callback must return the final
+value and may throw; a thrown error stops the operation with a merge failure.

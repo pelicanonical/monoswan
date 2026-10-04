@@ -1,0 +1,19 @@
+---
+title: Command reference
+description: monoswan CLI commands.
+slug: docs/commands
+---
+
+import { Code } from "@astrojs/starlight/components";
+
+<Code code={`monoswan <command> [options]`} lang="sh" />
+
+| Command                                            | Status    | Purpose                                          |
+| -------------------------------------------------- | --------- | ------------------------------------------------ |
+| [`create-package`](/docs/commands/create-package/) | Available | Generate a package from variant templates.       |
+| [`init`](/docs/commands/init/)                     | Available | Create a root configuration with default rules.  |
+| [`lint`](/docs/commands/lint/)                     | Available | Check workspace packages against their variants. |
+| [`print-config`](/docs/commands/print-config/)     | Available | Print the resolved variant for one package.      |
+
+Use `monoswan --help` or `monoswan <command> --help` for CLI syntax. Run
+`monoswan --version` to print the installed monoswan version.

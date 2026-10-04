@@ -1,0 +1,104 @@
+---
+title: Variant and file reference
+description: Fields, paths, validation, and initialization for package variants.
+slug: docs/configuration/variant-files
+---
+
+A variant describes expected package files. The same file fields may appear under
+`initialization` to provide creation-only defaults.
+
+```ts
+interface VariantConfig extends VariantContent {
+	initialization?: VariantContent;
+}
+
+interface VariantContent {
+	packageJson?: PackageManifest;
+	tsConfig?: TsConfigJson;
+	tsConfigs?: Record<string, TsConfigJson>;
+	additionalJsonFiles?: Record<string, JsonObject>;
+	additionalTextFiles?: Record<string, string>;
+}
+```
+
+## File fields
+
+| Field                 | Destination                           | Value                                         |
+| --------------------- | ------------------------------------- | --------------------------------------------- |
+| `packageJson`         | `<package>/package.json`              | Expected or initial package-manifest object.  |
+| `tsConfig`            | `<package>/tsconfig.json`             | Expected or initial TypeScript config object. |
+| `tsConfigs`           | Each key relative to the package root | TypeScript config object for each path.       |
+| `additionalJsonFiles` | Each key relative to the package root | JSON object for each path.                    |
+| `additionalTextFiles` | Each key relative to the package root | Exact text for each path.                     |
+
+Use relative, package-root paths for multi-file keys, such as `config/metadata.json` or
+`src/index.ts`.
+
+When creating a package, `tsConfig` owns `tsconfig.json`; if that path also appears in
+`tsConfigs` or `additionalJsonFiles`, the dedicated `tsConfig` value wins. `tsConfigs` wins over
+`additionalJsonFiles` when both contain the same path. Generated `package.json`, and
+`monoswan.json` when requested, take precedence over initializer entries using those paths.
+
+## Validation with `enforceVariants`
+
+`enforceVariants()` applies these rules:
+
+- Expected object properties are checked recursively. The actual object may contain additional
+  properties.
+- Arrays, strings, numbers, booleans, and `null` must match exactly.
+- `packageJson` is checked against the package manifest already discovered by monoswan.
+- JSON-backed files support JSONC comments and trailing commas.
+- Invalid JSONC or an unreadable configured file aborts linting with an error.
+- A configured file that does not exist produces a normal lint issue.
+- Text content must match exactly, including whitespace and trailing newlines.
+
+Variant content is only checked when `enforceVariants()` or a custom rule performs validation.
+
+## Package-level variant selection
+
+Select variants in `package.json`:
+
+```json
+{
+	"name": "@myrepo/example",
+	"monoswan": {
+		"variants": ["base", "my-library"]
+	}
+}
+```
+
+Or use `monoswan.json` beside the manifest:
+
+```jsonc
+{
+	// Later variants take precedence during merging.
+	"variants": ["base", "my-library"],
+}
+```
+
+`variants` must be an array of strings. It may be omitted or empty. When `monoswan.json` exists,
+it takes precedence over the manifest field; invalid standalone configuration fails instead of
+falling back to `package.json`. Unknown variant names fail variant resolution.
+
+## Initialization
+
+Regular variant content represents enforced configuration. `initialization` adds creation-only
+defaults. For selected variants `base` and `my-library`, package creation processes:
+
+1. `base`
+2. `base.initialization`
+3. `my-library`
+4. `my-library.initialization`
+
+The result becomes the resolved variant's computed `initialization` content and is what
+`create-package` writes. `print-config` displays both the regular merged content and this computed
+initialization result.
+
+The generated package name always comes from the command argument. By default, selected variants
+are recorded in the generated manifest; `--config standalone` records them in `monoswan.json`
+instead.
+
+## Merge behavior
+
+See [Configuration: Merge behavior](/docs/configuration/#merge-behavior) for default deep merges,
+array behavior, text precedence, and custom merge callbacks.

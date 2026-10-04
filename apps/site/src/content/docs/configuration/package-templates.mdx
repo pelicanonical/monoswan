@@ -1,0 +1,53 @@
+---
+title: Package templates
+description: Describe files used when initializing a package.
+slug: docs/configuration/package-templates
+---
+
+import { Code } from "@astrojs/starlight/components";
+import templateConfig from "../code-snippets/templates-overview.ts?raw";
+
+Package templates create new packages with the same configuration and starter files as the rest
+of your workspace. A template is not a separate configuration type: it is built from one or more
+variants and their optional `initialization` content.
+
+## Define a package template
+
+Add `initialization` to a variant for values that should be written when a package is created but
+do not need to be enforced by linting later.
+
+<Code code={templateConfig} lang="ts" title="monoswan.config.ts" />
+
+The regular variant content is both written during package creation and checked by
+`monoswan lint`. The `initialization` content is only used when creating the package. This makes
+it useful for initial versions, private flags, starter source files, and other defaults that a
+package may change later.
+
+Package templates can create or populate:
+
+- `package.json`
+- `tsconfig.json` and other TypeScript configuration files
+- Additional JSON files
+- Additional text files, including source files
+
+## Create a package
+
+Pass the destination, package name, and one or more variants to `create-package`:
+
+<Code code={`monoswan create-package packages/ui-button @myrepo/ui-button my-library`} lang="sh" />
+
+The generated `package.json` always uses the package name supplied to the command. By default, it
+also records the selected variants in its `monoswan` field so the new package is ready for
+linting. See the [`create-package` command reference](/docs/commands/create-package/) for all
+arguments and options.
+
+## Compose package templates
+
+You can select multiple variants to assemble a package from smaller building blocks:
+
+<Code code={`monoswan create-package packages/api @myrepo/api base node service`} lang="sh" />
+
+For `base` and `my-library`, for example, creation order is `base`, `base.initialization`,
+`my-library`, then `my-library.initialization`. Later values win according to the configured merge
+functions.
+Normal linting uses only regular variant content.

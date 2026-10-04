@@ -1,0 +1,5 @@
+{
+	"monoswan": {
+		"variants": ["base", "my-library"]
+	}
+}

@@ -1,0 +1,6 @@
+{
+	"name": "@myrepo/example",
+	"monoswan": {
+		"variants": ["my-library"]
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": ["./vite.json"],
+	"compilerOptions": {
+		"composite": true,
+		"rootDir": "${configDir}"
+	},
+	"include": ["${configDir}/vite.config.ts"]
+}

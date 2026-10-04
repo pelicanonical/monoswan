@@ -1,0 +1,21 @@
+---
+title: create-package
+description: Generate a package from variant templates.
+slug: docs/commands/create-package
+---
+
+import { Code } from "@astrojs/starlight/components";
+
+Creates a workspace package from selected variants and their `initialization` values.
+
+<Code code={`monoswan create-package <path> <package-name> <variants...> [options]`} lang="sh" />
+
+Variants are merged in the order provided. For each variant, its regular configuration is merged first and its `initialization` configuration second, before processing the next variant. The command writes the resulting package manifest, TypeScript configurations, JSON files, and text files beneath `path`.
+
+The package name always comes from `<package-name>`. Existing files and directories are not overwritten, and initializer paths cannot escape the new package.
+
+- `--config package-json` stores selected variants under `monoswan` in `package.json`. This is the default.
+- `--config standalone` writes selected variants to `monoswan.json` instead.
+- `--silent` suppresses success and error output.
+
+See [Package templates](/docs/configuration/package-templates/) for the initialization shape.

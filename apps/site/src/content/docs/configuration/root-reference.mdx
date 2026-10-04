@@ -1,0 +1,150 @@
+---
+title: Root configuration reference
+description: Complete reference for monoswan.config.ts and monoswan.config.mts.
+slug: docs/configuration/root-reference
+---
+
+import { Code } from "@astrojs/starlight/components";
+
+The root configuration defines reusable variants, lint rules, global ignores, and optional merge
+functions. The supported filenames are `monoswan.config.ts` and `monoswan.config.mts`.
+
+```ts
+import { defineConfig } from "monoswan";
+
+export default defineConfig({
+	variants: {},
+	rules: [],
+	ignore: {},
+	merge: {},
+});
+```
+
+For a command path, monoswan checks for `monoswan.config.ts` and then
+`monoswan.config.mts` in that directory before walking toward the filesystem root. The nearest
+configuration wins.
+
+## `variants`
+
+Type:
+
+```ts
+Record<string, VariantConfig | ((context: PackageContext) => VariantConfig)>;
+```
+
+Each key defines a selectable package variant. Static variants use an object. Dynamic variants
+receive:
+
+```ts
+interface PackageContext {
+	packageName: string | undefined;
+	packagePath: string;
+}
+```
+
+`packagePath` is absolute. `packageName` is undefined for a discovered project without a `name`
+field, so dynamic variants should provide a fallback when a name is required.
+
+See [Variants](/docs/configuration/variants/) and the
+[variant and file reference](/docs/configuration/variant-files/).
+
+## `rules`
+
+Type: `LintRule[]`
+
+Rules run for every discovered package unless a global or rule-level ignore matches. Built-in
+rules include `enforceVariants`, `requireMonoswanConfig`, and `sortPackageJson`. Custom rules are
+created with `createRule`.
+
+Variant definitions are not automatically enforced. Add `enforceVariants()` when selected
+variant content should be compared with files.
+
+See the [linting overview](/docs/linting/) and [custom rules](/docs/linting/custom/).
+
+## `ignore`
+
+```ts
+interface IgnoredConfig {
+	packages?: string[];
+	paths?: string[];
+}
+```
+
+- `packages` contains picomatch globs matched against package names.
+- `paths` contains picomatch globs matched against forward-slash package paths relative to the
+  workspace root containing this configuration.
+
+A match in either list excludes the package from all rules. Do not prefix path patterns with
+`./`.
+
+Ignore patterns are applied after workspace discovery. They do not remove a package from the
+workspace and do not affect commands such as `print-config`. Rule-level ignores use the same path
+and package-name matching, but skip only that rule.
+
+## `merge`
+
+```ts
+interface MergeConfig {
+	mergePackageManifests?: MergeFn<PackageManifest>;
+	mergeTsConfigs?: MergeFn<TsConfigJson>;
+	mergeAdditionalJsonFiles?: MergeFn<JsonObject>;
+	mergeAdditionalTextFiles?: MergeFn<string>;
+}
+```
+
+Every callback has this shape:
+
+```ts
+type MergeFn<Schema> = (
+	values: [Schema, ...Schema[]],
+	context: {
+		packageName: string | undefined;
+		packagePath: string;
+		filePath: string;
+	},
+) => Schema;
+```
+
+`values` follows variant order. Multi-file callbacks run separately for each path and receive
+only values defined for that path. The context paths are absolute. A thrown error stops the
+operation.
+
+See [Merge behavior](/docs/configuration/#merge-behavior) for defaults, arrays, text files, and
+initialization ordering.
+
+## Workspace discovery
+
+monoswan discovers packages from the workspace declaration in the directory containing the root
+configuration:
+
+- pnpm uses `pnpm-workspace.yaml#packages`.
+- npm, Yarn, and Bun use the `workspaces` array in `package.json`.
+- Yarn's object form, `workspaces: { packages: [...] }`, is also supported.
+
+When both files declare workspaces, `pnpm-workspace.yaml` takes precedence. Positive and negated
+workspace patterns are passed through to package discovery. Only packages selected by those
+patterns are included; the workspace root is not linted. `node_modules` is always excluded, but
+packages beneath directories named `test` or `tests` remain eligible when selected by the
+workspace patterns.
+
+A missing or invalid workspace declaration causes the command to fail instead of falling back to
+an unrestricted recursive manifest search.
+
+For linting, package selection happens in four stages:
+
+1. Workspace patterns determine which package manifests are workspace members.
+2. The requested lint path narrows that package set.
+3. The root `ignore` configuration removes packages from all lint rules.
+4. Each rule's `ignore` configuration removes packages from that rule only.
+
+## Command-specific discovery
+
+- `lint [path]` discovers workspace packages from the root configuration directory, then selects
+  packages at or below the requested path. If none exist below it, the deepest workspace package
+  containing the path is selected. Ignore path globs remain relative to the workspace root.
+- `print-config [path]` finds the root config first, discovers projects from the config's
+  directory, and selects the deepest project containing the requested path.
+- `create-package <path> ...` searches from the proposed destination toward the filesystem root
+  for its config. It does not modify `pnpm-workspace.yaml`.
+- `init [path]` refuses to create a nested config when the target or any ancestor already has a
+  supported config file.

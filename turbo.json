@@ -1,0 +1,42 @@
+{
+	"$schema": "https://turborepo.com/schema.json",
+	"globalDependencies": ["**/.env", "**/.env*"],
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build", "check"],
+			"outputs": ["dist/**"]
+		},
+		"check": {
+			"dependsOn": ["^build", "^check"]
+		},
+		"//#lint": {},
+		"//#lint:fix": {
+			"cache": false
+		},
+		"start": {
+			"dependsOn": ["^build", "build"],
+			"persistent": true,
+			"cache": false
+		},
+		"dev:vite-app": {
+			"dependsOn": ["^dev:build"],
+			"persistent": true,
+			"cache": false
+		},
+		"dev:start": {
+			"dependsOn": ["^dev:build", "dev:build"],
+			"persistent": true,
+			"interruptible": true,
+			"cache": false
+		},
+		"dev:build": {
+			"dependsOn": ["^dev:build"],
+			"outputs": ["dist/**"]
+		},
+		"test": {
+			"dependsOn": ["build", "^build", "^test"]
+		}
+	},
+	"cacheMaxAge": "24h",
+	"concurrency": "20"
+}

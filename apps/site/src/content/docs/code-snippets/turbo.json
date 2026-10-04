@@ -1,0 +1,9 @@
+{
+	"$schema": "https://turborepo.com/schema.json",
+	"tasks": {
+		"//#monoswan": {},
+		"//#monoswan:fix": {
+			"cache": false
+		}
+	}
+}

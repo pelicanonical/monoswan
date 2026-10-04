@@ -1,0 +1,23 @@
+---
+title: monoswan
+description: Keep package configuration consistent across a monorepo.
+slug: docs
+---
+
+import { Code } from "@astrojs/starlight/components";
+import indexConfig from "./code-snippets/index-config.ts?raw";
+
+monoswan keeps package configuration consistent across a monorepo. Define shared package shapes once, check them with rules, and use the same definitions to create new packages.
+
+<ul class="feature-list">
+	<li>
+		**Centrally managed configuration**: Share package.json, TypeScript, JSON, and text
+		configuration through composable variants.
+	</li>
+	<li>
+		**Rules & consistency**: Check packages with built-in or custom rules, with autofix support.
+	</li>
+	<li>**Package templates**: Create packages from variant defaults and initialization content.</li>
+</ul>
+
+<Code title="monoswan.config.ts" code={indexConfig} lang="ts" />

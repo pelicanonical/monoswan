@@ -1,0 +1,4 @@
+ignore: {
+	paths: ["apps/legacy/**"],
+	packages: ["@myrepo/experimental-*"],
+}

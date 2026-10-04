@@ -1,0 +1,29 @@
+@import "@monoswan/styles-config/shared-styles.css";
+
+[data-theme="dark"] {
+	--sl-color-bg: #111111;
+	--sl-color-bg-nav: #111111;
+	--sl-color-bg-sidebar: #111111;
+	--sl-color-bg-inline-code: #1b1b1b;
+	--sl-color-hairline-light: #292929;
+}
+
+.site-title {
+	background-color: #111111;
+	padding: 8px;
+	border-radius: 12px;
+}
+
+.feature-list {
+	list-style: disc;
+	padding-inline-start: 1.5rem;
+}
+
+@font-face {
+	font-family: "Forum";
+	/* Use a relative path to the local font file in `url()`. */
+	src: url("../assets/fonts/Forum-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}

@@ -1,0 +1,16 @@
+---
+title: init
+description: Initialize a monoswan configuration.
+slug: docs/commands/init
+---
+
+import { Code } from "@astrojs/starlight/components";
+import initConfig from "../code-snippets/init-config.ts?raw";
+
+<Code code={`monoswan init [path]`} lang="sh" />
+
+`path` defaults to the current directory.
+
+The command creates `monoswan.config.ts` with an empty `lib` variant and the default `enforceVariants()` and `sortPackageJson()` rules. It creates the target directory when needed and does not overwrite an existing configuration.
+
+<Code code={initConfig} lang="ts" title="monoswan.config.ts" />

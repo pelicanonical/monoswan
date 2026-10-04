@@ -1,0 +1,54 @@
+---
+title: Built-in rules
+description: Rules included with monoswan.
+slug: docs/linting/built-in
+---
+
+import { Code } from "@astrojs/starlight/components";
+import enforceVariantsRule from "../code-snippets/enforce-variants-rule.ts?raw";
+import sortPackageJsonRule from "../code-snippets/sort-package-json-rule.ts?raw";
+import requireConfigRule from "../code-snippets/require-config-rule.ts?raw";
+
+## `enforceVariants`
+
+Checks the resolved variant against `package.json`, TypeScript configs, additional JSON files, and text files.
+
+<Code code={enforceVariantsRule} lang="ts" title="monoswan.config.ts" />
+
+## `sortPackageJson`
+
+Checks package.json property order and provides an autofix. The default follows common package.json ordering and alphabetizes dependency groups. This is defined in `DEFAULT_PACKAGE_JSON_SORT_OPTIONS`.
+
+Sorting options support `alphabetical`, `fixed`, `custom`, and `none` orders. Use `children` for nested values and `overrides` for named properties.
+
+- `alphabetical` compares keys or string-array entries lexicographically.
+- `fixed` requires a `keys` array. Listed keys appear first in that order; unlisted keys follow
+  using `fallbackCompare`, which defaults to alphabetical order.
+- `custom` requires a `compare(keyA, keyB)` function.
+- `none` disables sorting at that location.
+- `children` applies one sorting rule recursively to child values.
+- `overrides` assigns a different rule to a named property and takes precedence over `children`.
+
+The default orders common package fields, sorts dependency groups and scripts alphabetically,
+and sorts selected string arrays such as `files`, `keywords`, and bundled dependencies. Its
+autofix rewrites `package.json` with tab indentation and a trailing newline. Import
+`DEFAULT_PACKAGE_JSON_SORT_OPTIONS` to extend or inspect the complete default.
+
+```ts
+sortPackageJson({
+	order: "fixed",
+	keys: ["name", "version", "private"],
+	fallbackCompare: (left, right) => left.localeCompare(right),
+	overrides: {
+		scripts: { order: "alphabetical" },
+	},
+});
+```
+
+<Code code={sortPackageJsonRule} lang="ts" title="monoswan.config.ts" />
+
+## `requireMonoswanConfig`
+
+Requires a package-level `monoswan` config. Set `requireVariant: true` to require at least one selected variant. Missing config has an autofix that creates `monoswan.json`.
+
+<Code code={requireConfigRule} lang="ts" title="monoswan.config.ts" />

@@ -1,0 +1,36 @@
+---
+title: Variants
+description: Reusable expectations for workspace packages.
+slug: docs/configuration/variants
+---
+
+import { Code } from "@astrojs/starlight/components";
+import variantsConfig from "../code-snippets/variants-config.ts?raw";
+import dynamicVariant from "../code-snippets/dynamic-variant.ts.txt?raw";
+
+A variant describes files and values that a package must contain.
+
+<Code code={variantsConfig} lang="ts" title="monoswan.config.ts" />
+
+## Validation behavior
+
+- Objects are checked recursively. Extra keys are allowed.
+- Arrays and primitive values must match exactly.
+- Configured files must exist.
+- Text files must match exactly, including whitespace and trailing newlines.
+- JSON-backed files accept JSONC comments and trailing commas.
+
+## Dynamic variants
+
+Use a function when expected values depend on the package.
+
+<Code code={dynamicVariant} lang="ts" title="monoswan.config.ts" />
+
+## Composing variants
+
+Packages can select multiple variants. monoswan merges them in the listed order. JSON objects are deeply merged; for text files, the last defined value wins. Unknown variant names produce an `INVALID_VARIANTS` error.
+
+Variant content is only checked when a rule does so. Add `enforceVariants()` to validate the fields shown above.
+
+See the [variant and file reference](/docs/configuration/variant-files/) for field types, path
+resolution, missing and invalid files, and initialization behavior.

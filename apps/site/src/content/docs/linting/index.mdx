@@ -1,0 +1,65 @@
+---
+title: Linting
+description: Check packages with built-in or custom rules.
+slug: docs/linting
+---
+
+import { Code } from "@astrojs/starlight/components";
+import packageScripts from "../code-snippets/lint-package-scripts.json.txt?raw";
+import lintRules from "../code-snippets/lint-rules.ts?raw";
+import ignorePackages from "../code-snippets/lint-ignore-packages.ts?raw";
+import ignoreRule from "../code-snippets/lint-ignore-rule.ts?raw";
+import turboConfig from "../code-snippets/turbo.json?raw";
+
+monoswan checks your monorepo against rules and structures that you can configure.
+
+Package selection follows a fixed pipeline: workspace patterns establish membership, the command
+path narrows the selected packages, the root ignore configuration skips packages globally, and
+rule-level ignores skip individual rules. Ignore configuration does not alter workspace
+membership.
+
+Run `monoswan lint .` to run in your current working directory.
+
+Run `monoswan lint . --fix` to automatically fix any autofixable issues.
+
+We recommend putting monoswan lint scripts in your package.json, and running these as part of any pre-commit hooks.
+
+Root `package.json`
+
+<Code code={packageScripts} lang="json" title="package.json" />
+
+### Rules
+
+Rules inspect each discovered package and return any issues they find. Add them to the root configuration.
+
+<Code code={lintRules} lang="ts" title="monoswan.config.ts" />
+
+Each rule receives the package name, path, `package.json`, and resolved variant. Issues can include a file location and an autofix. Rules without options can be called with no arguments.
+
+- [Built-in rules](/docs/linting/built-in/)
+- [Custom rules](/docs/linting/custom/)
+
+### Ignore packages
+
+You may want to turn off monoswan rules for certain workspace packages. monoswan supports both
+`paths` and `packages` ignore lists. Both ignore lists support glob patterns.
+
+You can ignore certain packages for the entire lint operation. A matching path or package name is
+not checked by any lint rule, but remains a discovered workspace package.
+
+<Code code={ignorePackages} lang="ts" title="monoswan.config.ts" />
+
+You can also ignore packages for specific rules. A matching path or package name skips the rule.
+
+<Code code={ignoreRule} lang="ts" title="monoswan.config.ts" />
+
+Path globs are matched against forward-slash paths relative to the workspace root containing the
+nearest monoswan configuration. They do not start with `./`, so use `packages/legacy/**`, not
+`./packages/legacy/**`. Package globs are matched separately against the package's `name`. A match
+in either list is sufficient to skip the package.
+
+### Turborepo support
+
+Since monoswan works at the repository level, linting tasks should be configured as root tasks for turborepo.
+
+<Code code={turboConfig} lang="json" title="turbo.json" />

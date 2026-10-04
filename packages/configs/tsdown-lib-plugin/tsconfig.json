@@ -1,0 +1,7 @@
+{
+	"extends": ["@monoswan/typescript-config/library.json", "@monoswan/typescript-config/node.json"],
+	"compilerOptions": {
+		"rootDir": "${configDir}"
+	},
+	"include": ["src", "${configDir}/tsdown.config.ts"]
+}
