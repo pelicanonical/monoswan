@@ -1,0 +1,49 @@
+name: Publish monoswan
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.21.0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26.6.0
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm check
+      - run: pnpm test
+      - run: pnpm build
+      - run: pnpm --filter monoswan coverage
+      - run: pnpm publint
+      - run: pnpm --filter @monoswan/site check:links
+
+  publish:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.21.0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26.6.0
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter monoswan build
+      - run: pnpm --filter monoswan pack --pack-destination "$RUNNER_TEMP/monoswan"
+      - name: Stage package on npm
+        run: npm stage publish "$RUNNER_TEMP"/monoswan/monoswan-*.tgz --access public

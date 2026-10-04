@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.21.0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26.6.0
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm check
+      - run: pnpm test
+      - run: pnpm build
+      - run: pnpm --filter monoswan coverage
+      - run: pnpm publint
+      - run: pnpm --filter @monoswan/site check:links
