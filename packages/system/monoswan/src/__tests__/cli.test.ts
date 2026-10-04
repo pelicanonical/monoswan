@@ -241,7 +241,7 @@ export default defineConfig({ rules: [partialFix()] });
 		]);
 		const installResult = spawnSync(
 			process.execPath,
-			[yarnCliPath, "install", "--mode=skip-build"],
+			[yarnCliPath, "install", "--mode=skip-build", "--no-immutable"],
 			{
 				cwd: consumerDirectory,
 				encoding: "utf8",
