@@ -1,84 +1,84 @@
 {
-  "name": "monoswan",
-  "version": "0.0.1",
-  "description": "Keep package configuration consistent across a monorepo.",
-  "keywords": [
-    "bun",
-    "configuration",
-    "lint",
-    "monorepo",
-    "npm",
-    "pnpm",
-    "workspace",
-    "yarn"
-  ],
-  "homepage": "https://monoswan.com",
-  "bugs": {
-    "url": "https://github.com/pelicanonical/monoswan/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pelicanonical/monoswan.git",
-    "directory": "packages/system/monoswan"
-  },
-  "license": "MIT",
-  "author": "Pelicanonical <hi@pelicanonical.com> (https://pelicanonical.com)",
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/config.d.ts",
-      "import": "./dist/config.mjs",
-      "default": "./dist/config.mjs"
-    }
-  },
-  "bin": {
-    "monoswan": "./dist/cli.mjs"
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "NODE_ENV=production tsdown",
-    "check": "tsc --noEmit",
-    "coverage": "vitest run --coverage",
-    "dev:build": "NODE_ENV=development tsdown",
-    "test": "vitest run"
-  },
-  "dependencies": {
-    "@pnpm/logger": "^1100.0.0",
-    "@pnpm/workspace.project-manifest-reader": "^1100.0.26",
-    "@pnpm/workspace.projects-reader": "^1101.0.25",
-    "commander": "^15.0.0",
-    "es-toolkit": "catalog:",
-    "get-tsconfig": "^4.14.2",
-    "jest-diff": "^30.5.1",
-    "jiti": "^2.7.0",
-    "js-yaml": "^4.3.2",
-    "jsonc-parser": "^3.3.1",
-    "picomatch": "^4.0.7",
-    "true-myth": "^9.4.0",
-    "valibot": "^1.4.2"
-  },
-  "devDependencies": {
-    "@monoswan/testing-utils": "workspace:*",
-    "@monoswan/tsdown-lib-plugin": "workspace:*",
-    "@monoswan/typescript-config": "workspace:*",
-    "@pnpm/types": "^1102.1.0",
-    "@types/js-yaml": "^4.0.9",
-    "@types/node": "catalog:",
-    "@types/npmcli__package-json": "^4.0.4",
-    "@types/picomatch": "^4.0.3",
-    "@vitest/coverage-v8": "catalog:",
-    "tsdown": "catalog:",
-    "typescript": "catalog:",
-    "vitest": "catalog:"
-  },
-  "engines": {
-    "node": ">=22.13.0"
-  },
-  "monoswan": {
-    "variants": [
-      "lib"
-    ]
-  }
+	"name": "monoswan",
+	"version": "0.0.1",
+	"description": "Keep package configuration consistent across a monorepo.",
+	"keywords": [
+		"bun",
+		"configuration",
+		"lint",
+		"monorepo",
+		"npm",
+		"pnpm",
+		"workspace",
+		"yarn"
+	],
+	"homepage": "https://monoswan.com",
+	"bugs": {
+		"url": "https://github.com/pelicanonical/monoswan/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/pelicanonical/monoswan.git",
+		"directory": "packages/system/monoswan"
+	},
+	"license": "MIT",
+	"author": "Pelicanonical <hi@pelicanonical.com> (https://pelicanonical.com)",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/config.d.ts",
+			"import": "./dist/config.mjs",
+			"default": "./dist/config.mjs"
+		}
+	},
+	"bin": {
+		"monoswan": "./dist/cli.mjs"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "NODE_ENV=production tsdown",
+		"check": "tsc --noEmit",
+		"coverage": "vitest run --coverage",
+		"dev:build": "NODE_ENV=development tsdown",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@pnpm/logger": "^1100.0.0",
+		"@pnpm/workspace.project-manifest-reader": "^1100.0.26",
+		"@pnpm/workspace.projects-reader": "^1101.0.25",
+		"commander": "^15.0.0",
+		"es-toolkit": "catalog:",
+		"get-tsconfig": "^4.14.2",
+		"jest-diff": "^30.5.1",
+		"jiti": "^2.7.0",
+		"js-yaml": "^4.3.2",
+		"jsonc-parser": "^3.3.1",
+		"picomatch": "^4.0.7",
+		"true-myth": "^9.4.0",
+		"valibot": "^1.4.2"
+	},
+	"devDependencies": {
+		"@monoswan/testing-utils": "workspace:*",
+		"@monoswan/tsdown-lib-plugin": "workspace:*",
+		"@monoswan/typescript-config": "workspace:*",
+		"@pnpm/types": "^1102.1.0",
+		"@types/js-yaml": "^4.0.9",
+		"@types/node": "catalog:",
+		"@types/npmcli__package-json": "^4.0.4",
+		"@types/picomatch": "^4.0.3",
+		"@vitest/coverage-v8": "catalog:",
+		"tsdown": "catalog:",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	},
+	"engines": {
+		"node": ">=22.13.0"
+	},
+	"monoswan": {
+		"variants": [
+			"lib"
+		]
+	}
 }
